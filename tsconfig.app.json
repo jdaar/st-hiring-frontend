@@ -17,11 +17,16 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Workspace aliases */
+    "paths": {
+      "@st-hiring/shared": ["../../packages/shared/src/index.ts"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "../../packages/shared/src"]
 }
