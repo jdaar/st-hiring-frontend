@@ -14,8 +14,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/events': 'http://localhost:3000',
-      '/settings': 'http://localhost:3000',
+      '/v1': 'http://localhost:3000',
     },
   },
   test: {

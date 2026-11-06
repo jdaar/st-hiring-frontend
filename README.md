@@ -26,7 +26,7 @@ MUI, Redux Toolkit, Formik, and Yup are already installed — no need to add the
 4. Run `yarn install` to install dependencies
 5. Run `yarn dev` to start the development server
 
-The Vite dev server proxies `/events` and `/settings` to the backend automatically, so no extra configuration is needed.
+The Vite dev server proxies `/v1` to the backend automatically, so no extra configuration is needed. Set `VITE_API_URL` to call a backend on another origin instead.
 
 ## Tasks
 
