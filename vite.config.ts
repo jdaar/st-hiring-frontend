@@ -18,7 +18,16 @@ export default defineConfig({
     },
   },
   test: {
+    name: 'frontend',
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.{ts,tsx}'],
+      // stories, test helpers, barrels and the bootstrap file are not app logic
+      exclude: ['src/**/*.{test,stories}.{ts,tsx}', 'src/test/**', 'src/**/index.ts', 'src/main.tsx', 'src/**/*.d.ts'],
+      reporter: ['text', 'html', 'lcov', 'json-summary'],
+      reportOnFailure: true,
+    },
   },
 })
