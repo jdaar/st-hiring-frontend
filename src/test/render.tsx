@@ -17,21 +17,37 @@ export const createTestQueryClient = () =>
     },
   })
 
-export const renderHookWithProviders = <T,>(
-  hook: () => T,
-  {
-    preloadedState,
-    queryClient = createTestQueryClient(),
-  }: { preloadedState?: Partial<RootState>; queryClient?: QueryClient } = {},
-) => {
+interface ProviderOptions {
+  preloadedState?: Partial<RootState>
+  queryClient?: QueryClient
+}
+
+const createProviders = ({ preloadedState, queryClient = createTestQueryClient() }: ProviderOptions) => {
   const store = createStore(preloadedState)
   const wrapper = ({ children }: { children: ReactNode }) => (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </QueryClientProvider>
     </Provider>
   )
 
+  return { wrapper, store, queryClient }
+}
+
+export const renderHookWithProviders = <T,>(hook: () => T, options: ProviderOptions = {}) => {
+  const { wrapper, store, queryClient } = createProviders(options)
+
   return { ...renderHook(hook, { wrapper }), store, queryClient }
+}
+
+// query through screen
+export const renderWithProviders = (ui: ReactElement, options: ProviderOptions = {}) => {
+  const { wrapper, store, queryClient } = createProviders(options)
+  const user = userEvent.setup()
+  render(ui, { wrapper })
+
+  return { user, store, queryClient }
 }
 
 // query through screen
