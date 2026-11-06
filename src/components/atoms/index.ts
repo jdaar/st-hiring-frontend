@@ -1,6 +1,7 @@
 export * from './Button'
 export * from './Input'
 export * from './Label'
+export * from './Pagination'
 export * from './Paragraph'
 export * from './ProgressBar'
 export * from './Switch'

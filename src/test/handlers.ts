@@ -1,5 +1,5 @@
 import { HttpResponse, delay, http } from 'msw'
-import { Setting, UpsertSettingRequest, isUpdateSettingRequest } from '@st-hiring/shared'
+import { Event, Setting, UpsertSettingRequest, isUpdateSettingRequest } from '@st-hiring/shared'
 import { failure, success } from './fixtures'
 
 type Latency = number | 'infinite'
@@ -83,4 +83,38 @@ export const createSettingsBackend = (initial: Setting[], options: SettingsBacke
   ]
 
   return { handlers, calls, reset, stored: () => stored }
+}
+
+export interface EventsBackendOptions {
+  latency?: Latency
+  // answer with this status instead
+  failGet?: number
+}
+
+// in-memory /v1/events paged like the backend
+export const createEventsBackend = (events: Event[], options: EventsBackendOptions = {}) => {
+  const calls = { pages: [] as number[] }
+  const reset = () => {
+    calls.pages = []
+  }
+
+  const handlers = [
+    http.get('*/v1/events', async ({ request }) => {
+      const url = new URL(request.url)
+      const page = Number(url.searchParams.get('page'))
+      const pageSize = Number(url.searchParams.get('pageSize'))
+      calls.pages.push(page)
+      if (options.latency !== undefined) await delay(options.latency)
+      if (options.failGet) return HttpResponse.json(failure(1999, 'Internal server error'), { status: options.failGet })
+
+      return HttpResponse.json(
+        success({
+          events: events.slice((page - 1) * pageSize, page * pageSize),
+          pagination: { page, pageSize, total: events.length, totalPages: Math.ceil(events.length / pageSize) },
+        }),
+      )
+    }),
+  ]
+
+  return { handlers, calls, reset }
 }

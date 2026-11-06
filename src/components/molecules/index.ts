@@ -1,5 +1,6 @@
 export * from './ButtonGroup'
 export * from './CardBody'
 export * from './CardHeader'
+export * from './EventSummary'
 export * from './LabeledInput'
 export * from './LabeledSwitch'
