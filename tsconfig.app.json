@@ -28,5 +28,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "../../packages/shared/src"]
+  "include": ["src", ".storybook/*.ts", ".storybook/*.tsx", "../../packages/shared/src"]
 }
