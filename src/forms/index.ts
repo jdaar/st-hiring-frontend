@@ -1,4 +1,5 @@
 export * from './error-message'
+export * from './fields/FormSelect'
 export * from './fields/FormSwitch'
 export * from './fields/FormTextField'
 export * from './Form'

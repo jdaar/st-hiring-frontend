@@ -74,7 +74,8 @@ export const SettingsForm = ({
   }
 
   return (
-    <Form initialValues={toFormValues(settings)} onSubmit={handleSubmit}>
+    // remounts when settings are added or removed; plain refetches keep unsaved edits
+    <Form key={settings.map(({ id }) => id).join('\n')} initialValues={toFormValues(settings)} onSubmit={handleSubmit}>
       {({ values, resetForm }) => (
         <Card
           title={title}

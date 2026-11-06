@@ -53,6 +53,25 @@ export const Loaded: Story = {
   },
 }
 
+// the new setting shows up in the settings form once created
+export const AddSetting: Story = {
+  ...connected(),
+  play: async ({ canvas, step }) => {
+    await canvas.findByLabelText('Max tickets per order', {}, SLOW)
+
+    await step('create a setting', async () => {
+      await userEvent.type(canvas.getByLabelText('Key'), 'refundPolicy')
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Value' }), 'No refunds')
+      await userEvent.click(canvas.getByRole('button', { name: 'Add setting' }))
+    })
+
+    await step('it can be edited with the others', async () => {
+      await expect(await canvas.findByLabelText('Refund policy', {}, SLOW)).toHaveValue('No refunds')
+      await waitFor(() => expect(canvas.getByLabelText('Key')).toHaveValue(''), SLOW)
+    })
+  },
+}
+
 // the save conflicts with an edit made elsewhere; discard loads it
 export const VersionConflict: Story = {
   ...connected({ concurrentEdit: (stored) => ({ ...stored, value: 20, version: stored.version + 1 }) }),

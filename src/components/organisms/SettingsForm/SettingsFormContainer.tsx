@@ -1,11 +1,13 @@
+import Stack from '@mui/material/Stack'
 import { useSettings } from '../../../hooks/use-settings'
 import { useUpsertSetting } from '../../../hooks/use-upsert-setting'
 import { toErrorMessage } from '../../../forms'
 import { Button, Paragraph, ProgressBar } from '../../atoms'
 import { Card } from '../Card'
+import { NewSettingForm } from '../NewSettingForm'
 import { SettingsForm } from './SettingsForm'
 
-// SettingsForm on top of the settings hooks: optimistic list, retries and refetch after saving
+// SettingsForm and NewSettingForm on top of the settings hooks: optimistic list, retries and refetch after saving
 export const SettingsFormContainer = () => {
   const { data, error, refetch } = useSettings()
   const { mutateAsync } = useUpsertSetting()
@@ -28,5 +30,10 @@ export const SettingsFormContainer = () => {
     )
   }
 
-  return <SettingsForm settings={data} onSave={mutateAsync} />
+  return (
+    <Stack spacing={5}>
+      <SettingsForm settings={data} onSave={mutateAsync} />
+      <NewSettingForm existingIds={data.map(({ id }) => id)} onCreate={mutateAsync} />
+    </Stack>
+  )
 }

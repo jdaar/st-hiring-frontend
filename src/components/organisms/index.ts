@@ -1,4 +1,5 @@
 export * from './Card'
 export * from './EventsList'
+export * from './NewSettingForm'
 export * from './PaginatedList'
 export * from './SettingsForm'
