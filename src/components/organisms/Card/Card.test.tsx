@@ -28,4 +28,17 @@ describe('Card', () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
     expect(document.querySelector('.MuiCardContent-root')).toBeNull()
   })
+
+  it('is raised by a shadow unless its elevation is 0', () => {
+    renderWithTheme(
+      <>
+        <Card title="Raised" />
+        <Card title="Flat" elevation={0} />
+      </>,
+    )
+    const card = (title: string) => screen.getByText(title).closest('.MuiCard-root')
+
+    expect(card('Raised')).toHaveStyle({ boxShadow: '0 2px 4px 0 rgb(73 80 87 / 25%)' })
+    expect(card('Flat')).toHaveStyle({ boxShadow: 'none' })
+  })
 })

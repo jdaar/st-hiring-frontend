@@ -14,7 +14,9 @@ const settings = [
 
 // resolves like the backend: same value, next version
 const saved = (change: UpsertSettingVariables): Promise<Setting> =>
-  Promise.resolve(makeSetting(change.id, { value: change.value, version: ('version' in change ? change.version : 0) + 1 }))
+  Promise.resolve(
+    makeSetting(change.id, { value: change.value, version: ('version' in change ? change.version : 0) + 1 }),
+  )
 
 describe('SettingsForm', () => {
   it('renders an input matching each value type', () => {
@@ -95,7 +97,9 @@ describe('SettingsForm', () => {
     // edits survive a background refetch
     expect(screen.getByLabelText('Support email')).toHaveValue('help@example.comx')
 
-    await user.click(within(screen.getByRole('group', { name: 'form actions' })).getByRole('button', { name: 'Discard' }))
+    await user.click(
+      within(screen.getByRole('group', { name: 'form actions' })).getByRole('button', { name: 'Discard' }),
+    )
 
     expect(screen.getByLabelText('Support email')).toHaveValue('new@example.com')
   })

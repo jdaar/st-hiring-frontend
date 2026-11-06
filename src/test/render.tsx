@@ -6,6 +6,7 @@ import { render, renderHook } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createQueryClient } from '../api/query/query-client'
 import { RootState, createStore } from '../store'
+import { syncSettings } from '../store/settings-sync'
 import { theme } from '../theme'
 
 // app defaults, without waiting between retries
@@ -24,6 +25,7 @@ interface ProviderOptions {
 
 const createProviders = ({ preloadedState, queryClient = createTestQueryClient() }: ProviderOptions) => {
   const store = createStore(preloadedState)
+  syncSettings(queryClient, store)
   const wrapper = ({ children }: { children: ReactNode }) => (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -53,7 +55,9 @@ export const renderWithProviders = (ui: ReactElement, options: ProviderOptions =
 // query through screen
 export const renderWithTheme = (ui: ReactElement) => {
   const user = userEvent.setup()
-  const { rerender } = render(ui, { wrapper: ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider> })
+  const { rerender } = render(ui, {
+    wrapper: ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>,
+  })
 
   return { user, rerender }
 }

@@ -6,7 +6,10 @@ import { makeSetting } from '../../../test/fixtures'
 import { renderWithProviders } from '../../../test/render'
 import { SettingsFormContainer } from './SettingsFormContainer'
 
-const settings = [makeSetting('maxTicketsPerOrder', { value: 10, version: 3 }), makeSetting('salesOpen', { value: true })]
+const settings = [
+  makeSetting('maxTicketsPerOrder', { value: 10, version: 3 }),
+  makeSetting('salesOpen', { value: true }),
+]
 
 describe('SettingsFormContainer', () => {
   it('loads the settings, saves a change and shows the refetched version', async () => {

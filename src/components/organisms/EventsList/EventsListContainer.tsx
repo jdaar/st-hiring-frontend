@@ -21,7 +21,7 @@ export const EventsListContainer = () => {
       loading={isPending}
       updating={isPlaceholderData}
       error={error && toErrorMessage(error)}
-      onRetry={() => refetch()}
+      onRetry={() => void refetch()}
       emptyText="No upcoming events."
     />
   )

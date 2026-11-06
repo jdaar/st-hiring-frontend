@@ -7,14 +7,19 @@ import { ThemeProvider } from '@mui/material/styles'
 import { mswLoader } from 'msw-storybook-addon/csf3'
 import { createQueryClient } from '../src/api/query/query-client'
 import { createStore } from '../src/store'
+import { syncSettings } from '../src/store/settings-sync'
 import { theme } from '../src/theme'
 
 // fresh cache and store per story, short retries so failure stories settle quickly
 const AppProviders = ({ children }: { children: ReactNode }) => {
-  const [store] = useState(createStore)
-  const [queryClient] = useState(() =>
-    createQueryClient({ defaultOptions: { queries: { retryDelay: 300 }, mutations: { retryDelay: 300 } } }),
-  )
+  const [{ store, queryClient }] = useState(() => {
+    const store = createStore()
+    const queryClient = createQueryClient({
+      defaultOptions: { queries: { retryDelay: 300 }, mutations: { retryDelay: 300 } },
+    })
+    syncSettings(queryClient, store)
+    return { store, queryClient }
+  })
 
   return (
     <Provider store={store}>

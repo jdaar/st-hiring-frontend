@@ -21,12 +21,7 @@ export const LabeledInput = forwardRef<HTMLDivElement, LabeledInputProps>(
     return (
       <FormControl ref={ref} error={Boolean(error)} required={required} disabled={disabled} fullWidth={fullWidth}>
         <Label htmlFor={inputId}>{label}</Label>
-        <Input
-          id={inputId}
-          label={label}
-          aria-describedby={message ? helperId : undefined}
-          {...inputProps}
-        />
+        <Input id={inputId} label={label} aria-describedby={message ? helperId : undefined} {...inputProps} />
         {message && <FormHelperText id={helperId}>{message}</FormHelperText>}
       </FormControl>
     )

@@ -3,6 +3,8 @@ import MuiPagination, { PaginationProps as MuiPaginationProps } from '@mui/mater
 
 export type PaginationProps = MuiPaginationProps
 
-export const Pagination = forwardRef<HTMLElement, PaginationProps>((props, ref) => <MuiPagination ref={ref} {...props} />)
+export const Pagination = forwardRef<HTMLElement, PaginationProps>((props, ref) => (
+  <MuiPagination ref={ref} {...props} />
+))
 
 Pagination.displayName = 'Pagination'

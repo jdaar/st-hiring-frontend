@@ -61,9 +61,7 @@ export const PaginatedList = <T,>({
       title={title}
       subheader={subheader}
       actions={
-        totalPages > 1 && (
-          <Pagination count={totalPages} page={page} onChange={(_event, next) => onPageChange(next)} />
-        )
+        totalPages > 1 && <Pagination count={totalPages} page={page} onChange={(_event, next) => onPageChange(next)} />
       }
     >
       {updating && <ProgressBar aria-label="Loading page" />}

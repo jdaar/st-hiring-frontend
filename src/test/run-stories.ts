@@ -1,4 +1,4 @@
-import { afterEach, describe, it } from 'vitest'
+import { afterEach } from 'vitest'
 import { composeStories, setProjectAnnotations } from '@storybook/react-vite'
 import type { MswParameter } from 'msw-storybook-addon/csf3'
 import { unmountElement } from '@storybook/react-dom-shim'
@@ -31,21 +31,20 @@ afterEach(() => {
   if (canvasElement) unmountElement(canvasElement)
   canvasElement?.remove()
   canvasElement = undefined
+  // setupUser leaves a clipboard stub on jsdom's navigator; storybook only sets up its own user-event copy when a
+  // clipboard exists, and that second copy on the document swallows React's onChange in every later story
+  Reflect.deleteProperty(window.navigator, 'clipboard')
 })
 
-// one test per story, running its play function
-export const runStories = (title: string, stories: Parameters<typeof composeStories>[0]) =>
-  describe(title, () => {
-    for (const [name, story] of Object.entries(composeStories(stories))) {
-      if (!isRunnable(story)) continue
-      it(
-        name,
-        async () => {
-          server.use(...handlersOf(story.parameters.msw))
-          canvasElement = document.body.appendChild(document.createElement('div'))
-          await story.run({ canvasElement })
-        },
-        15_000,
-      )
-    }
-  })
+export const STORY_TIMEOUT = 15_000
+
+// [name, story] pairs for it.each, one test per story
+export const storyCases = (stories: Parameters<typeof composeStories>[0]) =>
+  Object.entries(composeStories(stories)).filter((entry): entry is [string, RunnableStory] => isRunnable(entry[1]))
+
+// runs the story's play function on its own canvas
+export const runStory = async (_name: string, story: RunnableStory) => {
+  server.use(...handlersOf(story.parameters.msw))
+  canvasElement = document.body.appendChild(document.createElement('div'))
+  await story.run({ canvasElement })
+}

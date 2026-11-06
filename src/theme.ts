@@ -62,8 +62,14 @@ export const theme = createTheme({
       },
     },
     MuiCard: {
-      // fills whatever space its container gives it
-      styleOverrides: { root: { width: '100%', borderRadius: 8, boxShadow: '0 2px 4px 0 rgb(73 80 87 / 25%)' } },
+      // fills whatever space its container gives it; elevation 0 drops the shadow (nested in a dialog)
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          width: '100%',
+          borderRadius: 8,
+          boxShadow: ownerState.elevation === 0 ? 'none' : '0 2px 4px 0 rgb(73 80 87 / 25%)',
+        }),
+      },
     },
     MuiCardHeader: { styleOverrides: { root: { padding: 20, paddingBottom: 0 } } },
     MuiCardContent: { styleOverrides: { root: { padding: 20, '&:last-child': { paddingBottom: 20 } } } },

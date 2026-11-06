@@ -16,11 +16,20 @@ const renderForm = (onSubmit = vi.fn()) =>
   renderWithTheme(
     <Form<Values>
       initialValues={initialValues}
-      validationSchema={yup.object({ name: yup.string().required('Name is required'), seats: yup.number(), open: yup.boolean() })}
+      validationSchema={yup.object({
+        name: yup.string().required('Name is required'),
+        seats: yup.number(),
+        open: yup.boolean(),
+      })}
       onSubmit={onSubmit}
     >
       <FormTextField name="name" label="Name" />
-      <FormTextField name="seats" label="Seats" type="number" schema={yup.number().typeError('Seats is required').min(1, 'At least 1')} />
+      <FormTextField
+        name="seats"
+        label="Seats"
+        type="number"
+        schema={yup.number().typeError('Seats is required').min(1, 'At least 1')}
+      />
       <FormSwitch name="open" label="Open" />
       <FormStatus />
       <FormActions />

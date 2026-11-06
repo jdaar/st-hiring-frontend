@@ -108,7 +108,10 @@ describe('callEndpoint', () => {
       }),
     )
 
-    const setting = await callEndpoint(UpsertSettingEndpoint, { params: { id: 'a b/c' }, body: { value: 2, version: 1 } })
+    const setting = await callEndpoint(UpsertSettingEndpoint, {
+      params: { id: 'a b/c' },
+      body: { value: 2, version: 1 },
+    })
 
     expect(received).toEqual({
       path: '/v1/settings/a%20b%2Fc',
@@ -139,9 +142,7 @@ describe('callEndpoint', () => {
   })
 
   it('rejects a response that does not match the DTO', async () => {
-    server.use(
-      http.get('*/v1/events', () => HttpResponse.json(success({ events: [{ id: 'nope' }], pagination: {} }))),
-    )
+    server.use(http.get('*/v1/events', () => HttpResponse.json(success({ events: [{ id: 'nope' }], pagination: {} }))))
 
     const error = await rejectionOf(
       callEndpoint(GetPaginatedEventsEndpoint, { query: { page: 1, pageSize: 1 } }),

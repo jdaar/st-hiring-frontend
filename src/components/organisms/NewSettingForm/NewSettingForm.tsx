@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import { ApplicationError, Setting, SettingAlreadyExistsError, SettingValue } from '@st-hiring/shared'
 import { UpsertSettingVariables } from '../../../hooks/use-upsert-setting'
 import { Form, FormActions, FormSelect, FormStatus, FormSwitch, FormTextField, toErrorMessage } from '../../../forms'
-import { Card } from '../Card'
+import { Card, CardProps } from '../Card'
 
 export type SettingType = 'text' | 'number' | 'boolean'
 
@@ -14,6 +14,8 @@ export interface NewSettingFormProps {
   onCreate: (setting: UpsertSettingVariables) => Promise<Setting>
   title?: ReactNode
   subheader?: ReactNode
+  // 0 for a flat card, e.g. inside a dialog
+  elevation?: CardProps['elevation']
 }
 
 // one value per type, so switching type keeps what was typed in each
@@ -56,6 +58,7 @@ export const NewSettingForm = ({
   onCreate,
   title = 'New setting',
   subheader = 'Available as soon as it is added',
+  elevation,
 }: NewSettingFormProps) => {
   const handleSubmit = async (values: NewSettingFormValues, helpers: FormikHelpers<NewSettingFormValues>) => {
     try {
@@ -70,8 +73,19 @@ export const NewSettingForm = ({
   return (
     <Form initialValues={initialValues} onSubmit={handleSubmit}>
       {({ values }) => (
-        <Card title={title} subheader={subheader} actions={<FormActions submitLabel="Add setting" resetLabel="Clear" />}>
-          <FormTextField name="id" label="Key" helperText="e.g. maxTicketsPerOrder" schema={idSchema(existingIds)} fullWidth />
+        <Card
+          title={title}
+          subheader={subheader}
+          elevation={elevation}
+          actions={<FormActions submitLabel="Add setting" resetLabel="Clear" />}
+        >
+          <FormTextField
+            name="id"
+            label="Key"
+            helperText="e.g. maxTicketsPerOrder"
+            schema={idSchema(existingIds)}
+            fullWidth
+          />
           <FormSelect name="type" label="Type" options={TYPE_OPTIONS} fullWidth />
           {values.type === 'text' && (
             <FormTextField name="text" label="Value" schema={yup.string().trim().required('Required')} fullWidth />

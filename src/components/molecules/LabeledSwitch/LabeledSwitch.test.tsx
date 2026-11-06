@@ -15,7 +15,9 @@ describe('LabeledSwitch', () => {
   })
 
   it('shows the error message instead of the helper text', () => {
-    renderWithTheme(<LabeledSwitch label="Sales open" helperText="Customers can buy tickets" error="Could not be saved" />)
+    renderWithTheme(
+      <LabeledSwitch label="Sales open" helperText="Customers can buy tickets" error="Could not be saved" />,
+    )
 
     expect(screen.getByRole('checkbox', { name: 'Sales open' })).toHaveAccessibleDescription('Could not be saved')
     expect(screen.queryByText('Customers can buy tickets')).not.toBeInTheDocument()

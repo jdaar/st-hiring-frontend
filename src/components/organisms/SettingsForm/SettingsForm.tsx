@@ -4,7 +4,7 @@ import { Setting } from '@st-hiring/shared'
 import { UpsertSettingVariables } from '../../../hooks/use-upsert-setting'
 import { Form, FormActions, FormStatus, FormSwitch, FormTextField, toErrorMessage } from '../../../forms'
 import { Paragraph } from '../../atoms'
-import { Card } from '../Card'
+import { Card, CardProps } from '../Card'
 import { SettingField, SettingsFormValues, toFormValues, toLabel, valueSchema } from './settings-form-values'
 
 export interface SettingsFormProps {
@@ -12,6 +12,8 @@ export interface SettingsFormProps {
   onSave: (change: UpsertSettingVariables) => Promise<Setting>
   title?: ReactNode
   subheader?: ReactNode
+  // 0 for a flat card, e.g. inside a dialog
+  elevation?: CardProps['elevation']
 }
 
 const SettingInput = ({ field, index }: { field: SettingField; index: number }) => {
@@ -36,10 +38,11 @@ export const SettingsForm = ({
   onSave,
   title = 'Settings',
   subheader = 'Changes apply to new orders',
+  elevation,
 }: SettingsFormProps) => {
   if (settings.length === 0) {
     return (
-      <Card title={title} subheader={subheader}>
+      <Card title={title} subheader={subheader} elevation={elevation}>
         <Paragraph color="text.secondary">No settings yet.</Paragraph>
       </Card>
     )
@@ -48,9 +51,7 @@ export const SettingsForm = ({
   // saves the changed settings in parallel with the version they were loaded with; each failure stays on its field
   const handleSubmit = async (values: SettingsFormValues, { resetForm }: FormikHelpers<SettingsFormValues>) => {
     const changed = values.settings.filter((field) => field.value !== field.savedValue)
-    const results = await Promise.allSettled(
-      changed.map(({ id, value, version }) => onSave({ id, value, version })),
-    )
+    const results = await Promise.allSettled(changed.map(({ id, value, version }) => onSave({ id, value, version })))
     const outcome = new Map(changed.map((field, index) => [field.id, results[index]]))
 
     const next = values.settings.map((field): SettingField => {
@@ -80,6 +81,7 @@ export const SettingsForm = ({
         <Card
           title={title}
           subheader={subheader}
+          elevation={elevation}
           actions={<FormActions onReset={() => resetForm({ values: toFormValues(settings) })} />}
         >
           {values.settings.map((field, index) => (

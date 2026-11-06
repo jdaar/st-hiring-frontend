@@ -53,21 +53,25 @@ export const Loaded: Story = {
   },
 }
 
-// the new setting shows up in the settings form once created
+// created from the new tab, the setting shows up in the update tab
 export const AddSetting: Story = {
   ...connected(),
   play: async ({ canvas, step }) => {
     await canvas.findByLabelText('Max tickets per order', {}, SLOW)
 
-    await step('create a setting', async () => {
+    await step('create a setting in the new tab', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'New' }))
       await userEvent.type(canvas.getByLabelText('Key'), 'refundPolicy')
       await userEvent.type(canvas.getByRole('textbox', { name: 'Value' }), 'No refunds')
       await userEvent.click(canvas.getByRole('button', { name: 'Add setting' }))
     })
 
     await step('it can be edited with the others', async () => {
+      await waitFor(
+        () => expect(canvas.getByRole('tab', { name: 'Update' })).toHaveAttribute('aria-selected', 'true'),
+        SLOW,
+      )
       await expect(await canvas.findByLabelText('Refund policy', {}, SLOW)).toHaveValue('No refunds')
-      await waitFor(() => expect(canvas.getByLabelText('Key')).toHaveValue(''), SLOW)
     })
   },
 }

@@ -70,7 +70,9 @@ describe('usePaginatedEvents', () => {
     })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
-    act(() => result.current.goToPage(4))
+    act(() => {
+      result.current.goToPage(4)
+    })
 
     expect(result.current.page).toBe(4)
     expect(result.current.isPlaceholderData).toBe(true)
@@ -91,7 +93,9 @@ describe('usePaginatedEvents', () => {
     act(() => result.current.nextPage())
     expect(store.getState().eventsPagination.page).toBe(2)
 
-    act(() => result.current.goToPage(10))
+    act(() => {
+      result.current.goToPage(10)
+    })
     expect(store.getState().eventsPagination.page).toBe(2)
   })
 
@@ -103,7 +107,9 @@ describe('usePaginatedEvents', () => {
     })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
-    act(() => result.current.setPageSize(5))
+    act(() => {
+      result.current.setPageSize(5)
+    })
 
     await waitFor(() => expect(result.current.events.map(({ id }) => id)).toEqual([1, 2, 3, 4, 5]))
     expect(result.current.page).toBe(1)

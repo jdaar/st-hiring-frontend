@@ -8,8 +8,18 @@ const event = makeEvent(1, {
   name: 'Foy Vance',
   location: 'Great American Music Hall',
   ticketTypes: [
-    { type: 'Week of show', faceValuePrice: '40.0000', serviceFeePrice: '11.4100', statusCounts: { available: 12, sold: 3, reserved: 1 } },
-    { type: 'VIP', faceValuePrice: '95.5000', serviceFeePrice: '15.0000', statusCounts: { available: 0, sold: 20, reserved: 0 } },
+    {
+      type: 'Week of show',
+      faceValuePrice: '40.0000',
+      serviceFeePrice: '11.4100',
+      statusCounts: { available: 12, sold: 3, reserved: 1 },
+    },
+    {
+      type: 'VIP',
+      faceValuePrice: '95.5000',
+      serviceFeePrice: '15.0000',
+      statusCounts: { available: 0, sold: 20, reserved: 0 },
+    },
   ],
 })
 
@@ -24,16 +34,27 @@ describe('EventSummary', () => {
     expect(screen.getByText(/^Tuesday, Dec 01, 2026 · /)).toHaveAttribute('datetime', '2026-12-01T20:00:00.000Z')
   })
 
+  it('renders the markdown description with headings below the event title', () => {
+    renderWithTheme(<EventSummary event={makeEvent(3, { description: '# Lineup\n\nHello **world**' })} />)
+
+    expect(screen.getByRole('heading', { level: 4, name: 'Lineup' })).toBeInTheDocument()
+    expect(screen.getByText('world')).toHaveProperty('tagName', 'STRONG')
+  })
+
   it('lists every ticket type in a table with its column headers', () => {
     renderWithTheme(<EventSummary event={event} />)
     const table = screen.getByRole('table', { name: 'Foy Vance tickets' })
 
-    expect(within(table).getAllByRole('columnheader').map((header) => header.textContent)).toEqual([
-      'Ticket Type',
-      'Price per Ticket',
-      'Availability',
-    ])
-    expect(within(table).getAllByRole('rowheader').map((cell) => cell.textContent)).toEqual(['Week of show', 'VIP'])
+    expect(
+      within(table)
+        .getAllByRole('columnheader')
+        .map((header) => header.textContent),
+    ).toEqual(['Ticket Type', 'Price per Ticket', 'Availability'])
+    expect(
+      within(table)
+        .getAllByRole('rowheader')
+        .map((cell) => cell.textContent),
+    ).toEqual(['Week of show', 'VIP'])
   })
 
   it('shows the total price with its face value and service fee breakdown', () => {

@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow'
 import { Theme } from '@mui/material/styles'
 import { Event } from '@st-hiring/shared'
 import { capitalize, formatEventDate, formatPrice } from '../../../format'
-import { Paragraph, Title, TitleLevel } from '../../atoms'
+import { Markdown, Paragraph, Title, TitleLevel } from '../../atoms'
+import { Expandable } from '../Expandable'
 
 export interface EventSummaryProps {
   event: Event
@@ -45,7 +46,11 @@ export const EventSummary = forwardRef<HTMLDivElement, EventSummaryProps>(({ eve
       </Paragraph>
     </Stack>
 
-    {event.description && <Paragraph size="sm">{event.description}</Paragraph>}
+    {event.description && (
+      <Expandable>
+        <Markdown headingLevel={Math.min(titleLevel + 1, 6) as TitleLevel}>{event.description}</Markdown>
+      </Expandable>
+    )}
 
     {event.ticketTypes.length === 0 ? (
       <Paragraph size="sm" color="text.secondary">

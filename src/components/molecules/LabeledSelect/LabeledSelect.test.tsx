@@ -16,7 +16,9 @@ describe('LabeledSelect', () => {
   })
 
   it('shows the error message instead of the helper text', () => {
-    renderWithTheme(<LabeledSelect label="Type" defaultValue="text" options={options} helperText="Pick one" error="Required" />)
+    renderWithTheme(
+      <LabeledSelect label="Type" defaultValue="text" options={options} helperText="Pick one" error="Required" />,
+    )
 
     expect(screen.getByRole('combobox', { name: 'Type' })).toHaveAccessibleDescription('Required')
     expect(screen.queryByText('Pick one')).not.toBeInTheDocument()

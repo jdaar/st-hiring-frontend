@@ -33,7 +33,11 @@ describe('useSetting', () => {
   it('selects one setting out of the shared list request', async () => {
     const requests = serveSettings()
 
-    const { result } = renderHookWithProviders(() => ({ list: useSettings(), b: useSetting('b'), missing: useSetting('z') }))
+    const { result } = renderHookWithProviders(() => ({
+      list: useSettings(),
+      b: useSetting('b'),
+      missing: useSetting('z'),
+    }))
 
     await waitFor(() => expect(result.current.b.isSuccess).toBe(true))
     expect(result.current.b.data).toMatchObject({ id: 'b', value: 7, version: 3 })

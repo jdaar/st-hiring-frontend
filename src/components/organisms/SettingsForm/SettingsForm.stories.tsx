@@ -14,7 +14,10 @@ const settings = [
 const saved = (change: UpsertSettingVariables): Promise<Setting> =>
   new Promise((resolve) =>
     setTimeout(
-      () => resolve(makeSetting(change.id, { value: change.value, version: ('version' in change ? change.version : 0) + 1 })),
+      () =>
+        resolve(
+          makeSetting(change.id, { value: change.value, version: ('version' in change ? change.version : 0) + 1 }),
+        ),
       600,
     ),
   )

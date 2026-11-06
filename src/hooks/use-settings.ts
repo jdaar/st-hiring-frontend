@@ -18,7 +18,9 @@ const withPendingUpsert = (settings: Setting[], { id, ...request }: UpsertSettin
   if (isUpdateSettingRequest(request)) {
     return existing
       ? settings.map((setting) =>
-          setting === existing ? { ...existing, value: request.value, version: request.version + 1, updatedAt: now } : setting,
+          setting === existing
+            ? { ...existing, value: request.value, version: request.version + 1, updatedAt: now }
+            : setting,
         )
       : settings
   }
@@ -38,7 +40,10 @@ export const useSettings = () => {
     select: (mutation) => mutation.state.variables as UpsertSettingVariables,
   })
 
-  const data = useMemo(() => query.data && pendingUpserts.reduce(withPendingUpsert, query.data), [query.data, pendingUpserts])
+  const data = useMemo(
+    () => query.data && pendingUpserts.reduce((settings, upsert) => withPendingUpsert(settings, upsert), query.data),
+    [query.data, pendingUpserts],
+  )
 
   return { ...query, data }
 }

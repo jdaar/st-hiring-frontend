@@ -22,7 +22,11 @@ describe('PaginatedList', () => {
     renderList()
 
     expect(screen.getByRole('heading', { name: 'Fruits' })).toBeInTheDocument()
-    expect(within(screen.getByRole('list', { name: 'Fruits' })).getAllByRole('listitem').map((item) => item.textContent)).toEqual(['apple', 'banana'])
+    expect(
+      within(screen.getByRole('list', { name: 'Fruits' }))
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual(['apple', 'banana'])
   })
 
   it('reports the chosen page', async () => {

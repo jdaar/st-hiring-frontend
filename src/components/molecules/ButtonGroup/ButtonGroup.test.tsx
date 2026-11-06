@@ -15,7 +15,11 @@ describe('ButtonGroup', () => {
     )
     const group = screen.getByRole('group', { name: 'pagination' })
 
-    expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual(['Previous', 'Next'])
+    expect(
+      within(group)
+        .getAllByRole('button')
+        .map((button) => button.textContent),
+    ).toEqual(['Previous', 'Next'])
 
     await user.click(within(group).getByRole('button', { name: 'Next' }))
     expect(onNext).toHaveBeenCalledOnce()

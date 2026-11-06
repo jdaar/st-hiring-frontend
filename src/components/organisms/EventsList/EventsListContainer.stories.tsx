@@ -30,7 +30,9 @@ export const Loaded: Story = {
     await step('first page', async () => {
       await expect(await canvas.findByRole('heading', { name: 'Event 1' }, SLOW)).toBeInTheDocument()
       await expect(canvas.getByText('25 events')).toBeInTheDocument()
-      await expect(within(canvas.getByRole('list', { name: 'Upcoming events' })).getAllByRole('listitem')).toHaveLength(10)
+      await expect(within(canvas.getByRole('list', { name: 'Upcoming events' })).getAllByRole('listitem')).toHaveLength(
+        10,
+      )
     })
 
     await step('next page', async () => {
@@ -42,7 +44,9 @@ export const Loaded: Story = {
     await step('last page', async () => {
       await userEvent.click(canvas.getByRole('button', { name: 'Go to page 3' }))
       await expect(await canvas.findByRole('heading', { name: 'Event 21' }, SLOW)).toBeInTheDocument()
-      await expect(within(canvas.getByRole('list', { name: 'Upcoming events' })).getAllByRole('listitem')).toHaveLength(5)
+      await expect(within(canvas.getByRole('list', { name: 'Upcoming events' })).getAllByRole('listitem')).toHaveLength(
+        5,
+      )
     })
   },
 }

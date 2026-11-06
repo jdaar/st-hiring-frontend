@@ -13,20 +13,9 @@ Welcome to the Eventim frontend test for new hires. The purpose of this test is 
 
 MUI, Redux Toolkit, Formik, and Yup are already installed — no need to add them.
 
-## Requirements
-
-- NVM (to switch to the correct Node version)
-- The backend API must be running on `http://localhost:3000` before you start the frontend
-
 ## Setup
 
-1. Fork this repository into your own GitHub account
-2. Clone the fork to your machine
-3. Run `nvm use` to switch to the correct Node version
-4. Run `yarn install` to install dependencies
-5. Run `yarn dev` to start the development server
-
-The Vite dev server proxies `/v1` to the backend automatically, so no extra configuration is needed. Set `VITE_API_URL` to call a backend on another origin instead.
+See the [root README](../../README.md) for running the project (with and without Nix) and the QA process.
 
 ## Tasks
 

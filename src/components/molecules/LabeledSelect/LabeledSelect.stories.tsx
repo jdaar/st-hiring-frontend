@@ -24,7 +24,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('combobox', { name: 'Type' })).toHaveAccessibleDescription('Decides which input the value gets')
+    await expect(canvas.getByRole('combobox', { name: 'Type' })).toHaveAccessibleDescription(
+      'Decides which input the value gets',
+    )
   },
 }
 
