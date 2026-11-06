@@ -1,8 +1,7 @@
-import CircularProgress from '@mui/material/CircularProgress'
 import { useSettings } from '../../../hooks/use-settings'
 import { useUpsertSetting } from '../../../hooks/use-upsert-setting'
 import { toErrorMessage } from '../../../forms'
-import { Button, Paragraph } from '../../atoms'
+import { Button, Paragraph, ProgressBar } from '../../atoms'
 import { Card } from '../Card'
 import { SettingsForm } from './SettingsForm'
 
@@ -24,7 +23,7 @@ export const SettingsFormContainer = () => {
   if (!data) {
     return (
       <Card title="Settings">
-        <CircularProgress aria-label="Loading settings" />
+        <ProgressBar aria-label="Loading settings" />
       </Card>
     )
   }
