@@ -15,6 +15,8 @@
     "@mui/material": "^5.15.20",
     "@reduxjs/toolkit": "^2.2.5",
     "@st-hiring/shared": "workspace:*",
+    "@tanstack/react-query": "^5.106.0",
+    "@tanstack/react-query-devtools": "^5.106.0",
     "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
