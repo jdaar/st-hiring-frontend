@@ -26,7 +26,7 @@ const SLOW = { timeout: 10_000 }
 const meta = {
   title: 'Organisms/SettingsForm/Connected',
   component: SettingsFormContainer,
-  decorators: [(Story) => <div style={{ maxWidth: 480 }}>{Story()}</div>],
+  parameters: { layout: 'padded' },
 } satisfies Meta<typeof SettingsFormContainer>
 
 export default meta

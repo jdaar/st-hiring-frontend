@@ -23,7 +23,7 @@ const meta = {
   title: 'Organisms/SettingsForm',
   component: SettingsForm,
   args: { settings, onSave: fn(saved) },
-  decorators: [(Story) => <div style={{ maxWidth: 480 }}>{Story()}</div>],
+  parameters: { layout: 'padded' },
 } satisfies Meta<typeof SettingsForm>
 
 export default meta

@@ -9,7 +9,6 @@ import App from './App.tsx'
 import { createQueryClient } from './api/query/query-client'
 import { createStore } from './store'
 import { theme } from './theme'
-import './index.css'
 
 const store = createStore()
 const queryClient = createQueryClient()

@@ -9,13 +9,15 @@ const meta = {
     size: 'md',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['md', 'sm'] },
+    size: { control: 'inline-radio', options: ['lg', 'md', 'sm'] },
     color: { control: 'select', options: ['text.primary', 'text.secondary', 'error', 'primary'] },
   },
 } satisfies Meta<typeof Paragraph>
 
 export default meta
 type Story = StoryObj<typeof meta>
+
+export const Large: Story = { args: { size: 'lg' } }
 
 export const Medium: Story = {}
 

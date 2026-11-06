@@ -11,6 +11,7 @@ describe('Paragraph', () => {
   })
 
   it.each([
+    ['lg', 'MuiTypography-subtitle1'],
     ['md', 'MuiTypography-body1'],
     ['sm', 'MuiTypography-body2'],
   ] as const)('uses the %s body size', (size, className) => {

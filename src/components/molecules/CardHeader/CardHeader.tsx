@@ -14,7 +14,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       ref={ref}
       disableTypography
       title={
-        <Title level={titleLevel} variant="h6">
+        <Title level={titleLevel} variant="h5">
           {title}
         </Title>
       }
