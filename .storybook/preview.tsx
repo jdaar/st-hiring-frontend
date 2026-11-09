@@ -3,6 +3,7 @@ import type { Preview } from '@storybook/react-vite'
 import { Provider } from 'react-redux'
 import { QueryClientProvider } from '@tanstack/react-query'
 import CssBaseline from '@mui/material/CssBaseline'
+import GlobalStyles from '@mui/material/GlobalStyles'
 import { ThemeProvider } from '@mui/material/styles'
 import { mswLoader } from 'msw-storybook-addon/csf3'
 import { createQueryClient } from '../src/api/query/query-client'
@@ -28,6 +29,28 @@ const AppProviders = ({ children }: { children: ReactNode }) => {
   )
 }
 
+// the docs controls use native radios; draw the checked one as a ring with a white gap around the dot
+const docsRadios = (
+  <GlobalStyles
+    styles={({ palette }) => ({
+      '.docblock-argstable input[type="radio"]': {
+        appearance: 'none',
+        width: 16,
+        height: 16,
+        borderRadius: '50%',
+        border: `2px solid ${palette.grey[500]}`,
+        backgroundColor: palette.common.white,
+        '&:checked': {
+          borderColor: palette.primary.main,
+          backgroundColor: palette.primary.main,
+          boxShadow: `inset 0 0 0 2px ${palette.common.white}`,
+        },
+        '&:focus-visible': { outline: `2px solid ${palette.primary.main}`, outlineOffset: 2 },
+      },
+    })}
+  />
+)
+
 const preview: Preview = {
   tags: ['autodocs'],
   loaders: [mswLoader()],
@@ -36,6 +59,7 @@ const preview: Preview = {
       <AppProviders>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          {docsRadios}
           <Story />
         </ThemeProvider>
       </AppProviders>
