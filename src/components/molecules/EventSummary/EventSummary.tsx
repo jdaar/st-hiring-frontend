@@ -24,6 +24,8 @@ const stackedRow = (theme: Theme) => ({
     display: 'grid',
     gridTemplateAreas: '"type availability" "price price"',
     gridTemplateColumns: '1fr auto',
+    // type and availability use different font sizes, so line them up on the text, not the cell box
+    alignItems: 'baseline',
     columnGap: theme.spacing(2),
     '& > .MuiTableCell-root': { display: 'block', borderBottom: 0 },
     '& > .MuiTableCell-root:nth-of-type(2)': { paddingTop: 0 },
