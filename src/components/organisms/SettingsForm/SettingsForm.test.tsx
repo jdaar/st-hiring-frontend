@@ -85,7 +85,7 @@ describe('SettingsForm', () => {
     expect(await screen.findByText('Changed by someone else, discard to load the latest value')).toBeInTheDocument()
     expect(screen.getByLabelText('Support email')).toHaveAttribute('aria-invalid', 'true')
     expect(screen.getByRole('checkbox', { name: 'Sales open' })).not.toBeChecked()
-    expect(screen.getByRole('alert')).toHaveTextContent('1 of 2 changes could not be saved')
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
   it('discards changes by reloading the current settings', async () => {

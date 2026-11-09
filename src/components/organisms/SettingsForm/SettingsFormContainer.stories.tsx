@@ -107,7 +107,6 @@ export const SaveServerDown: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Save' }))
 
     await expect(await canvas.findByText('Internal server error', {}, SLOW)).toBeInTheDocument()
-    await expect(canvas.getByRole('alert')).toHaveTextContent('1 of 1 changes could not be saved')
   },
 }
 

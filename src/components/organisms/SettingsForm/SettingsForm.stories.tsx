@@ -93,7 +93,6 @@ export const SaveFails: Story = {
     await expect(
       await canvas.findByText('Changed by someone else, discard to load the latest value'),
     ).toBeInTheDocument()
-    await expect(canvas.getByRole('alert')).toHaveTextContent('1 of 1 changes could not be saved')
     await expect(canvas.getByRole('button', { name: 'Discard' })).toBeEnabled()
   },
 }

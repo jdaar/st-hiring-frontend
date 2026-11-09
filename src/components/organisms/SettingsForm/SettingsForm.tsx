@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { FormikErrors, FormikHelpers } from 'formik'
 import { Setting } from '@st-hiring/shared'
 import { UpsertSettingVariables } from '../../../hooks/use-upsert-setting'
-import { Form, FormActions, FormStatus, FormSwitch, FormTextField, toErrorMessage } from '../../../forms'
+import { Form, FormActions, FormSwitch, FormTextField, toErrorMessage } from '../../../forms'
 import { Paragraph } from '../../atoms'
 import { Card, CardProps } from '../Card'
 import { SettingField, SettingsFormValues, toFormValues, toLabel, valueSchema } from './settings-form-values'
@@ -70,7 +70,6 @@ export const SettingsForm = ({
       values: { settings: next },
       errors: failed ? ({ settings: fieldErrors } as FormikErrors<SettingsFormValues>) : {},
       touched: failed ? { settings: next.map(() => ({ value: true })) } : {},
-      status: failed ? `${failed} of ${changed.length} changes could not be saved` : undefined,
     })
   }
 
@@ -87,7 +86,6 @@ export const SettingsForm = ({
           {values.settings.map((field, index) => (
             <SettingInput key={field.id} field={field} index={index} />
           ))}
-          <FormStatus />
         </Card>
       )}
     </Form>
